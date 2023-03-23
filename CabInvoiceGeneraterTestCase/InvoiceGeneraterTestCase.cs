@@ -35,8 +35,8 @@ namespace CabInvoiceGeneraterTestCase
         {
             Rides[] rides = { new Rides(1.0f, 2.0f), new Rides(2.0f, 4.0f) };
 
-            float totalFair = invoiceGenrater.CalculateFair(rides);
-            Assert.AreEqual(36,totalFair);
+            InvoiceSummery invoice = invoiceGenrater.CalculateFair(rides);
+            Assert.AreEqual(36,invoice.TotalFair);
         }
 
         [Test]
@@ -45,12 +45,23 @@ namespace CabInvoiceGeneraterTestCase
             Rides[] rides = null;
             try
             {
-                float totalFair = invoiceGenrater.CalculateFair(rides);
+                invoiceGenrater.CalculateFair(rides);
             }
             catch(InvoiceGenraterException ex)
             {
                 Assert.AreEqual("Null Rides", ex.Message);
             }
+        }
+
+        [Test]
+        public void GivenNoOfRides_ShouldReturnObjOfInvoiceSummery()
+        {
+            Rides[] rides = { new Rides(1.0f, 2.0f), new Rides(2.0f, 4.0f) };
+
+            InvoiceSummery invoice = invoiceGenrater.CalculateFair(rides);
+            InvoiceSummery expected = new InvoiceSummery(2,36);
+            
+            expected.Equals(invoice);
         }
     }
 }

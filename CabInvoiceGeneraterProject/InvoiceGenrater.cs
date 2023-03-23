@@ -18,7 +18,7 @@ namespace CabInvoiceGeneraterProject
             return Math.Max(5, fair);
         }
 
-        public float CalculateFair(Rides[] rides)
+        public InvoiceSummery CalculateFair(Rides[] rides)
         {
             if (rides == null)
                 throw new InvoiceGenraterException(InvoiceGenraterException.Type.NULL_RIDES, "Null Rides");
@@ -27,7 +27,7 @@ namespace CabInvoiceGeneraterProject
             foreach (Rides ride in rides)
                 totalFair = totalFair + CalculateFair(ride.Distance,ride.Time); 
 
-            return totalFair;
+            return new InvoiceSummery(rides.Length,totalFair);
         }
     }
 }
