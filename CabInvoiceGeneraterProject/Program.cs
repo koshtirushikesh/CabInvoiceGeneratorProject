@@ -15,8 +15,11 @@ namespace CabInvoiceGeneraterProject
 
             Rides[] rides = { new Rides(1.0f, 2.0f), new Rides(2.0f, 4.0f) };
 
-            float totalFair = invoiceGenrater.CalculateFair(rides);
-            Console.WriteLine(totalFair);
+            InvoiceSummery invoice = invoiceGenrater.CalculateFair(rides);
+            Console.WriteLine(invoice.NoOfRides);
+            Console.WriteLine(invoice.TotalFair);
+            Console.WriteLine(invoice.AverageFair);
+
             Console.ReadLine();
         }
     }
