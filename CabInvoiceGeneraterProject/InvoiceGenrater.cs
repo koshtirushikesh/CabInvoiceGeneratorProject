@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CabInvoiceGeneraterProject
 {
     public class InvoiceGenrater
     {
-        readonly int PER_KM = 10;
-        readonly int PER_MINIT = 1;
+        readonly int COST_PER_KM = 10;
+        readonly int COST_PER_MINIT = 1;
 
         public float CalculateFair(float distance, float time)
         {
@@ -18,8 +14,20 @@ namespace CabInvoiceGeneraterProject
             if (distance == 0)
                 throw new InvoiceGenraterException(InvoiceGenraterException.Type.INVALID_DISTANCE, "Invalid Distance");
 
-            float fair = distance * PER_KM + time * PER_MINIT;
-            return Math.Max(5,fair);
+            float fair = distance * COST_PER_KM + time * COST_PER_MINIT;
+            return Math.Max(5, fair);
+        }
+
+        public float CalculateFair(Rides[] rides)
+        {
+            if (rides == null)
+                throw new InvoiceGenraterException(InvoiceGenraterException.Type.NULL_RIDES, "Null Rides");
+
+            float totalFair = 0;
+            foreach (Rides ride in rides)
+                totalFair = totalFair + CalculateFair(ride.Distance,ride.Time); 
+
+            return totalFair;
         }
     }
 }
