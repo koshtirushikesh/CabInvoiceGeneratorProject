@@ -63,5 +63,20 @@ namespace CabInvoiceGeneraterTestCase
             
             expected.Equals(invoice);
         }
+
+        [Test]
+        public void GivenUserId_ShouldReturnListOfRides()
+        {
+            
+            RideRepository rideRepository = new RideRepository();
+            
+            Rides[] rides = { new Rides(1.0f, 2.0f), new Rides(2.0f, 4.0f) };
+
+            rideRepository.AddRides("RushiKoshti", rides);
+
+            List<Rides> listOfRides = rideRepository.GetRides(userId: "RushiKoshti");
+
+            Assert.AreEqual(rides,listOfRides);
+        }
     }
 }

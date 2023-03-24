@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CabInvoiceGeneraterProject
 {
@@ -15,10 +16,20 @@ namespace CabInvoiceGeneraterProject
 
             Rides[] rides = { new Rides(1.0f, 2.0f), new Rides(2.0f, 4.0f) };
 
-            InvoiceSummery invoice = invoiceGenrater.CalculateFair(rides);
-            Console.WriteLine(invoice.NoOfRides);
-            Console.WriteLine(invoice.TotalFair);
-            Console.WriteLine(invoice.AverageFair);
+            RideRepository rideRepository = new RideRepository();
+            rideRepository.AddRides("RushiKoshti", rides);
+
+            List<Rides> listOfRides = rideRepository.GetRides(userId: "RushiKoshti");
+
+            foreach (var ride in listOfRides)
+            {
+                Console.WriteLine(ride.Distance + "\n" + ride.Time);
+            }
+
+            InvoiceSummery invoice = invoiceGenrater.CalculateFair(listOfRides.ToArray());
+            Console.WriteLine("\nNO Of Rides " + invoice.NoOfRides +
+                              "\nTotalFair " + invoice.TotalFair +
+                              "\nAvgFair " + invoice.AverageFair);
 
             Console.ReadLine();
         }
