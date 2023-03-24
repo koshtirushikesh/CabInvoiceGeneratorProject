@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CabInvoiceGeneraterProject
 {
     public class InvoiceGenrater
     {
+        RideRepository rideRepository = new RideRepository();
         readonly int COST_PER_KM = 10;
         readonly int COST_PER_MINIT = 1;
 
