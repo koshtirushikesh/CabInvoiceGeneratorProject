@@ -14,6 +14,7 @@ namespace CabInvoiceGeneraterProject
             INVALID_TIME,
             NULL_RIDES,
             INVALID_USERID,
+            INVALID_RIDE_TYPE,
         }
         Type type;
         public InvoiceGenraterException(Type type , string message):base(message)
