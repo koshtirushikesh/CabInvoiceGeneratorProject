@@ -12,7 +12,7 @@ namespace CabInvoiceGeneraterTestCase
             {
                 float fair = invoiceGenrater.CalculateFair(1, 0);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Assert.AreEqual("Invalid Time", ex.Message);
             }
@@ -21,13 +21,13 @@ namespace CabInvoiceGeneraterTestCase
         [Test]
         public void GivenDistnceAndTime_ShouldReturnFair()
         {
-            Assert.AreEqual(11,invoiceGenrater.CalculateFair(1,1));
+            Assert.AreEqual(11, invoiceGenrater.CalculateFair(1, 1));
         }
 
         [Test]
         public void GivenMinDistnceAndMinTime_ShouldReturnDefaultFair()
         {
-            Assert.AreEqual(5, invoiceGenrater.CalculateFair(0.1f,0.1f));
+            Assert.AreEqual(5, invoiceGenrater.CalculateFair(0.1f, 0.1f));
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace CabInvoiceGeneraterTestCase
             Rides[] rides = { new Rides(1.0f, 2.0f), new Rides(2.0f, 4.0f) };
 
             InvoiceSummery invoice = invoiceGenrater.CalculateFair(rides);
-            Assert.AreEqual(36,invoice.TotalFair);
+            Assert.AreEqual(36, invoice.TotalFair);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace CabInvoiceGeneraterTestCase
             {
                 invoiceGenrater.CalculateFair(rides);
             }
-            catch(InvoiceGenraterException ex)
+            catch (InvoiceGenraterException ex)
             {
                 Assert.AreEqual("Null Rides", ex.Message);
             }
@@ -59,24 +59,40 @@ namespace CabInvoiceGeneraterTestCase
             Rides[] rides = { new Rides(1.0f, 2.0f), new Rides(2.0f, 4.0f) };
 
             InvoiceSummery invoice = invoiceGenrater.CalculateFair(rides);
-            InvoiceSummery expected = new InvoiceSummery(2,36);
-            
+            InvoiceSummery expected = new InvoiceSummery(2, 36);
+
             expected.Equals(invoice);
         }
 
         [Test]
         public void GivenUserId_ShouldReturnListOfRides()
         {
-            
+
             RideRepository rideRepository = new RideRepository();
-            
+
             Rides[] rides = { new Rides(1.0f, 2.0f), new Rides(2.0f, 4.0f) };
 
             rideRepository.AddRides("RushiKoshti", rides);
 
             List<Rides> listOfRides = rideRepository.GetRides(userId: "RushiKoshti");
 
-            Assert.AreEqual(rides,listOfRides);
+            Assert.AreEqual(rides, listOfRides);
+        }
+
+        [Test]
+        public void GivenPremiumRideTypeWithMinimumDistanceAndTime_ShouldReturnMinimumPremimumFair()
+        {
+            InvoiceGenrater invoiceGenrater = new InvoiceGenrater(RideType.PRIMEMUM);
+            float fair = invoiceGenrater.CalculateFair(1.0f, 1.0f);
+            Assert.AreEqual(20, fair);
+        }
+
+        [Test]
+        public void GivenPremiumRideType_ShouldReturnMaxPremimumFair()
+        {
+            InvoiceGenrater invoiceGenrater = new InvoiceGenrater(RideType.PRIMEMUM);
+            float fair = invoiceGenrater.CalculateFair(5.0f, 5.0f);
+            Assert.AreEqual(85, fair);
         }
     }
 }

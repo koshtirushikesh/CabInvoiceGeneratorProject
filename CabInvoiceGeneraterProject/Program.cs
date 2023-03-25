@@ -31,6 +31,14 @@ namespace CabInvoiceGeneraterProject
                               "\nTotalFair " + invoice.TotalFair +
                               "\nAvgFair " + invoice.AverageFair);
 
+            InvoiceGenrater invoiceGenrater1 = new InvoiceGenrater(RideType.NORMAL);
+            float fair1 = invoiceGenrater1.CalculateFair(1, 2);
+            Console.WriteLine("Fair: " + fair1);
+
+            InvoiceGenrater invoiceGenrater2 = new InvoiceGenrater(RideType.PRIMEMUM);
+            float fair2 = invoiceGenrater2.CalculateFair(1, 2);
+            Console.WriteLine("Fair: " + fair2);
+
             Console.ReadLine();
         }
     }
